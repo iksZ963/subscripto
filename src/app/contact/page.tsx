@@ -1,34 +1,93 @@
+"use client"
+
+import { useState } from 'react';
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/hooks/use-toast"
+
 export default function ContactPage() {
-    return (
-      <div className="px-6 sm:px-8 py-12 bg-background text-foreground">
-        <h1 className="text-3xl sm:text-4xl font-semibold text-primary mb-4">Contact Us</h1>
-        <form className="space-y-4">
-          <label className="block text-lg font-medium text-muted">
-            Your Name
-            <input
-              type="text"
-              className="w-full mt-1 px-4 py-2 border border-border rounded"
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const { toast } = useToast()
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Here you would typically send the form data to your backend
+    console.log(formData);
+    toast({
+      title: "Message Sent!",
+      description: "We'll get back to you as soon as possible.",
+    })
+    setFormData({ name: '', email: '', message: '' });
+  };
+
+  return (
+    <div className="min-h-screen bg-primary text-primary-foreground">
+      <div className="max-w-2xl mx-auto px-4 py-12 sm:py-20">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-6">Contact Us</h1>
+        <p className="text-xl text-accent mb-8">
+          Have questions or need assistance? We're here to help. Fill out the form below and we'll get back to you as soon as possible.
+        </p>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label htmlFor="name" className="block text-lg font-medium mb-2">
+              Your Name
+            </label>
+            <Input
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full bg-accent text-accent-foreground"
             />
-          </label>
-          <label className="block text-lg font-medium text-muted">
-            Your Email
-            <input
+          </div>
+          <div>
+            <label htmlFor="email" className="block text-lg font-medium mb-2">
+              Your Email
+            </label>
+            <Input
+              id="email"
+              name="email"
               type="email"
-              className="w-full mt-1 px-4 py-2 border border-border rounded"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full bg-accent text-accent-foreground"
             />
-          </label>
-          <label className="block text-lg font-medium text-muted">
-            Message
-            <textarea
-              className="w-full mt-1 px-4 py-2 border border-border rounded"
+          </div>
+          <div>
+            <label htmlFor="message" className="block text-lg font-medium mb-2">
+              Message
+            </label>
+            <Textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+              className="w-full bg-accent text-accent-foreground"
               rows={4}
             />
-          </label>
-          <button type="submit" className="px-6 py-2 bg-cta text-black rounded">
+          </div>
+          <Button type="submit" className="w-full bg-cta text-primary hover:bg-secondary transition-colors">
             Send Message
-          </button>
+          </Button>
         </form>
       </div>
-    );
-  }
-  
+    </div>
+  );
+}
+

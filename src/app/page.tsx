@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
+import dummyDashboard from './images/dummy-dashboard.png';
 
 export default function HomePage() {
   return (
@@ -39,7 +40,7 @@ export default function HomePage() {
           </div>
           <div className="hidden lg:block">
             <Image
-              src="/dummy-dashboard.png"
+              src={dummyDashboard}
               alt="Subscripto Dashboard"
               width={600}
               height={400}
@@ -55,8 +56,8 @@ export default function HomePage() {
             {[
               { name: 'TechCorp', color: 'bg-primary' },
               { name: 'GreenEnergy', color: 'bg-secondary' },
-              { name: 'FinanceHub', color: 'bg-primary' },
-              { name: 'HealthInnovate', color: 'bg-secondary' }
+              { name: 'FinanceHub', color: 'bg-text' },
+              { name: 'HealthInnovate', color: 'bg-cta' }
             ].map((company, index) => (
               <div key={index} className={`w-32 h-12 ${company.color} rounded-md flex items-center justify-center`}>
                 <span className="text-primary-foreground font-bold">{company.name}</span>
